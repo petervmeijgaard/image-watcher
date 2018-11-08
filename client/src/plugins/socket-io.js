@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+const { VUE_APP_SERVER_HOST, VUE_APP_SERVER_PORT } = process.env;
+const socket = io(`${VUE_APP_SERVER_HOST}:${VUE_APP_SERVER_PORT}`);
 
 // Bind the instance of Socket.io to Vue.
 Vue.$socket = socket;

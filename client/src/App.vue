@@ -24,18 +24,8 @@ export default {
     };
   },
 
-  computed: {
-    backgroundStyle() {
-      return {
-        backgroundImage: `src(${this.imgUrl})`,
-      };
-    },
-  },
-
   mounted() {
     this.$socket.on('NEW_IMAGE', (image) => {
-      console.log(process.env);
-
       this.imgUrl = `${process.env.VUE_APP_TIMELAPSE_URL}${image}`;
     });
   }
