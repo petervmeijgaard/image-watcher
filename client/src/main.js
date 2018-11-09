@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import App from './App.vue';
 
+// Load used plugins...
 import './plugins/register-service-worker';
 import './plugins/socket-io';
-
-import 'normalize.css';
 
 Vue.config.productionTip = false;
 

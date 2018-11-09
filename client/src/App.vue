@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <div
       class="background"
-      :style="{ backgroundImage: `url(${imgUrl})` }"
+      :style="{ backgroundImage: `url(${imageUrl})` }"
     ></div>
     <div class="foreground">
       <div class="header">
@@ -16,22 +16,39 @@
 
 <script>
 export default {
-  name: 'app',
+  /**
+   * The name of the application.
+   */
+  name: 'ImageWatcher',
 
+  /**
+   * The state of this component.
+   *
+   * @returns {Object} The View-Model.
+   */
   data() {
     return {
-      imgUrl: 'http://placekitten.com/500/600',
+      imageUrl: 'http://placekitten.com/500/600',
     };
   },
 
+  /**
+   * Will be fired when the component is mounted.
+   */
   mounted() {
-    this.$socket.on('NEW_IMAGE', (image) => {
-      this.imgUrl = `${process.env.VUE_APP_TIMELAPSE_URL}${image}`;
+    this.$socket.on('NEW_IMAGE', (file) => {
+      const image = new Image();
+      image.src = `${process.env.VUE_APP_TIMELAPSE_URL}${file}`;
+      image.onload = () => {
+        this.imageUrl = image.src;
+      };
     });
   }
 };
 </script>
 <style lang="stylus">
+@require '~normalize.css';
+
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
 
 *
@@ -55,6 +72,7 @@ html, body
   background-size: cover
 
 .foreground
+  z-index: 999
   position: absolute
   top: 0
   width: 100vw
